@@ -16,7 +16,7 @@ app.use("/posts", postsRoute);
 
 //ROUTES
 app.use("/", (req, res) => {
-  res.send("we are on home");
+  res.send("root page");
 });
 
 //connect to DB

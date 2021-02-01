@@ -4,16 +4,6 @@ const Post = require("../models/Post");
 
 //routes
 
-//GETs all the posts
-router.get("/", async (req, res) => {
-  try {
-    const posts = await Post.find();
-    res.json(posts);
-  } catch (err) {
-    res.json({ message: err });
-  }
-});
-
 //SUBMITS a POST
 router.post("/", async (req, res) => {
   const post = new Post({
@@ -29,6 +19,16 @@ router.post("/", async (req, res) => {
   }
 });
 
+//GETs all the posts
+router.get("/", async (req, res) => {
+  try {
+    const posts = await Post.find();
+    res.json(posts);
+  } catch (err) {
+    res.json({ message: err });
+  }
+});
+
 //GET specific post by the ID
 router.get("/:postId", async (req, res) => {
   try {
@@ -39,24 +39,24 @@ router.get("/:postId", async (req, res) => {
   }
 });
 
-//Delete a specific post by ID
-router.delete("/:postId", async (req, res) => {
-  try {
-    const removedPost = await Post.remove({ _id: req.params.postId });
-    res.json(removedPost);
-  } catch (err) {
-    res.json({ message: err });
-  }
-});
-
 //UPDATE a post
 router.patch("/:postId", async (req, res) => {
   try {
     const updatedPost = await Post.updateOne(
       { _id: req.params.postId },
-      { $set: { title: req.body.title } } //set new value of speficif paramater, in this case title
+      { $set: { title: req.body.title } }
     );
     res.json(updatedPost);
+  } catch (err) {
+    res.json({ message: err });
+  }
+});
+
+//Delete a specific post by ID
+router.delete("/:postId", async (req, res) => {
+  try {
+    const removedPost = await Post.deleteOne({ _id: req.params.postId });
+    res.json(removedPost);
   } catch (err) {
     res.json({ message: err });
   }
